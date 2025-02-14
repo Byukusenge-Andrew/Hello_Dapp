@@ -1,3 +1,4 @@
 build
 node_modules
 hello-world-dapp/node_modules
+hello-world-dapp/src/contracts/*
