@@ -5,7 +5,7 @@ contract HelloWorld {
     string public name;
     
     constructor() {
-        name = "Chrispin";  // Set initial name here
+        name = "Chrispin"; 
     }
     
     function getName() public view returns (string memory) {

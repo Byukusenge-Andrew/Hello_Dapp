@@ -68,3 +68,17 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.retry-button {
+  margin-top: 20px;
+  background-color: #61dafb;
+  border: none;
+  color: #282c34;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.retry-button:hover {
+  background-color: #4fa8d5;
+}
