@@ -20,7 +20,7 @@ Make sure you have the following installed:
    ```
 
 2. **Install Dependencies**:
-   Navigate to the project directory and install the required packages:
+   Navigate to hello-world-dapp and install the required packages:
    ```bash
    npm install
    ```
@@ -51,7 +51,10 @@ Make sure you have the following installed:
        - **Chain ID**: 1337 (or the chain ID shown in Ganache)
      - Click "Save".
 
-7. **Interact with the DApp**:
+7.**Replace The src/contracts/HelloWold.json**
+  -repalce the fiel with the helloworld from your build files
+
+8. **Interact with the DApp**:
    You can now interact with your deployed contracts through your DApp interface.
 
 ### Full Deployment
