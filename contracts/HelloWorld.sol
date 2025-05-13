@@ -2,17 +2,21 @@
 pragma solidity ^0.8.0;
 
 contract HelloWorld {
-    string public name;
+    string public message;
     
     constructor() {
-        name = "Chrispin"; 
+       message = "Hello, World!"; 
     }
     
     function getName() public view returns (string memory) {
-        return name;
+        return message;
     }
     
     function setName(string memory _name) public {
-        name = _name;
+       message = _name;
     }
-} 
+    
+    function clearMessage() public {
+        message = "";
+    }
+}

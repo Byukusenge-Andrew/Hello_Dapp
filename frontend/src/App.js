@@ -16,20 +16,15 @@ function App() {
   useEffect(() => {
     const initWeb3 = async () => {
       try {
-        // Check if MetaMask is installed
         if (!window.ethereum) {
           throw new Error('Please install MetaMask');
         }
-
-        // Request account access
+        
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         setAccount(accounts[0]);
-        
-        // Initialize Web3
         const web3Instance = new Web3(window.ethereum);
         setWeb3(web3Instance);
-
-        // Get network ID
+        
         const netId = await web3Instance.eth.net.getId();
         console.log('Connected to network:', netId);
         setNetworkId(netId);
@@ -107,52 +102,46 @@ function App() {
     }
   };
 
-  if (loading) return (
-    <div className="App">
-      <header className="App-header">
-        <p>Loading... Please make sure you are connected to Ganache through MetaMask</p>
-      </header>
-    </div>
-  );
-
-  if (error) return (
-    <div className="App">
-      <header className="App-header">
-        <div className="error-message">
-          <p>Error: {error}</p>
-          <p>Please make sure:</p>
-          <ul>
-            <li>Ganache is running on port 7545</li>
-            <li>MetaMask is connected to Ganache (http://127.0.0.1:7545)</li>
-            <li>You have deployed your contract using 'truffle migrate --reset'</li>
-          </ul>
-          <button onClick={() => window.location.reload()} className="retry-button">
-            Retry Connection
-          </button>
-        </div>
-      </header>
-    </div>
-  );
+ 
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Hello {name}</h1>
-        <form onSubmit={handleSubmit} className="name-form">
-          <input
-            type="text"
-            value={inputName}
-            onChange={handleNameChange}
-            placeholder="Enter new name"
-            className="name-input"
-            disabled={loading}
-          />
-          <button type="submit" disabled={loading || !inputName.trim()}>
-            Update Name
+        <div className="message-container">
+          <h1>BlockChain Message Board</h1>
+          <h4>Current Message: {name || 'Loading...'}</h4>
+          <form onSubmit={handleSubmit} className="name-form">
+            <input
+              type="text"
+              value={inputName}
+              onChange={handleNameChange}
+              placeholder="Enter new name"
+              className="name-input"
+              disabled={loading}
+            />
+            <button type="submit" disabled={loading || !inputName.trim()}>
+              Update 
+            </button>
+          </form>
+          <button 
+            className="refresh-button"
+            onClick={async () => {
+              try {
+                setLoading(true);
+                await contract.methods.clearMessage().send({ from: account });
+                const newName = await contract.methods.getName().call();
+                setName(newName || 'No message set');
+              } catch (err) {
+                console.error('Error clearing message:', err);
+                setError(err.message);
+              } finally {
+                setLoading(false);
+              }
+            }}
+          >
+           Refresh
           </button>
-        </form>
-        <p>Connected to network ID: {networkId}</p>
-        {account && <p>Connected Account: {account}</p>}
+        </div>
       </header>
     </div>
   );
